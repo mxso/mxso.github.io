@@ -1,0 +1,815 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="神经网络," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="为以后的大数据处理和人工智能打基础，先搞点实用的吧。">
+<meta name="keywords" content="神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BP神经网络">
+<meta property="og:url" content="http://songit.cn/BP神经网络.html">
+<meta property="og:site_name" content="Dreamsong&#39;s Blog">
+<meta property="og:description" content="为以后的大数据处理和人工智能打基础，先搞点实用的吧。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/人工神经元模型.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/有监督学习.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/有监督学习.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/BP结构图.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/BP学习过程.png">
+<meta property="og:updated_time" content="2017-03-15T13:49:41.871Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BP神经网络">
+<meta name="twitter:description" content="为以后的大数据处理和人工智能打基础，先搞点实用的吧。">
+<meta name="twitter:image" content="http://oekcopstf.bkt.clouddn.com/人工神经元模型.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://songit.cn/BP神经网络.html"/>
+
+
+
+
+
+  <title> BP神经网络 | Dreamsong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Dreamsong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">隐居山林，潜心研究。</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://songit.cn/BP神经网络.html">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Dreamsong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oekcopstf.bkt.clouddn.com/%E5%B8%A6%E5%9C%9F.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Dreamsong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Dreamsong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                BP神经网络
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-15T11:31:33+08:00">
+                2017-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>为以后的大数据处理和人工智能打基础，先搞点实用的吧。<br><a id="more"></a></p>
+<h1 id="神经网络模型"><a href="#神经网络模型" class="headerlink" title="神经网络模型"></a>神经网络模型</h1><p>神经网络是指用计算机仿真人脑的结构，用许多小的处理单元仿真生物神经元，用算法实现人脑的识别、记忆、思考过程。它是在对人脑认识的基础上，以数学和物理方法及从信息处理的角度对人脑生物神经网络进行抽象并建立起来的某种简化模型。简单的讲，人工神经网络是一个数学模型，可以用电子线路来实现，也可以用计算机程序来模拟，是人工智能研究的一种方法。</p>
+<h1 id="人工神经元模型"><a href="#人工神经元模型" class="headerlink" title="人工神经元模型"></a>人工神经元模型</h1><p><img src="http://oekcopstf.bkt.clouddn.com/人工神经元模型.png" alt="人工神经元模型"></p>
+<h1 id="神经网络采用Sigmoid函数的原因"><a href="#神经网络采用Sigmoid函数的原因" class="headerlink" title="神经网络采用Sigmoid函数的原因"></a>神经网络采用Sigmoid函数的原因</h1><p>对于深度神经网络，中间的隐层的输出必须有一个激活函数。否则多个隐层的作用和没有隐层相同。这个激活函数不一定是sigmoid，常见的有sigmoid、tanh、relu等。<br>神经网络中的激活函数，其作用就是引入非线性。具体的非线性形式，则有多种选择。<br>对于二分类问题，输出层是sigmoid函数。这是因为sigmoid函数可以把实数域光滑的映射到[0,1]空间。函数值恰好可以解释为属于正类的概率（概率的取值范围是0~1），所以数据在传递的过程中不容易发散。当然也有相应的缺点，就是饱和的时候梯度太小。另外，sigmoid函数单调递增，连续可导，导数形式非常简单，是一个比较合适的函数。<br>对于多分类问题，输出层就必须是softmax函数了。softmax函数是sigmoid函数的推广。<br>  有关sigmoid函数形式和图形点<a href="http://baike.baidu.com/link?url=Qfnxl8rN5STwu3QRdsCE0J0wSnyF8QbrS-IDzdYDx4uUM-jWGQn2oOXcfID5Z7ld2gLaY8a5ULM3RWt4t7BC4zaveeKHERzMqYdw5og37QNaay0fA2r2bP1_nLdF3zqr" target="_blank" rel="external">这里</a></p>
+<h1 id="神经网络的训练学习"><a href="#神经网络的训练学习" class="headerlink" title="神经网络的训练学习"></a>神经网络的训练学习</h1><p>神经网络的学习也称为训练,指的是通过神经网络所在环境的刺激作用调整<br>神经网络的自由参数,使神经网络以一种新的方式对外部环境做出反应的一个过程。能够从环境中学习和在学习中提高自身性能是神经网络的最有意义的性质。神经网络经过反复学习对其环境更为了解。<br>神经网络的学习是基于一组样本进行的，它包括输入和输出（这里用期望输出表示），输入和输出有多少个分量就有多少个输入和输出神经元与之对应。最初神经网络的权值（Weight）和阈值（Threshold）是任意给定的，学习就是逐渐调整权值和阈值使得网络的实际输出和期望输出一致。<br>在人工神经网络中，一般有两类训练算法。</p>
+<ol>
+<li>有监督学习（有教师学习）<br><img src="http://oekcopstf.bkt.clouddn.com/有监督学习.png" alt="有监督学习"><br>有导师学习在学习时需要给出导师信号或称为期望输出响应。神经网络对外部环境是未知的,但可以将导师看作对外部环境的了解,由输入一输出样本集合来表示。导师信号或期望响应代表了神经网络执行情况的最佳结果,即对于网络输入调整网络参数,使得网络输出逼近导师信号或期望响应。</li>
+<li>无监督学习（无教师学习）<br><img src="http://oekcopstf.bkt.clouddn.com/有监督学习.png" alt="无监督学习"><br>无导师学习包括强化学习与无监督学习或称自组织学习。在强化学习中,对输入输出映射的学习是通过与外界环境的连续作用最小化性能的标量索引而完成的。在无监督学习或自组织学习中没有外部导师或评价来统观学习过程,而是提供一个关于网络学习表示方法质量的测量尺度,根据该尺度将网络的自由参数最优化。一旦网络与输入数据的统计规律性达成一致,就能够形成内部表示方法来为输入特征编码,并由此自动得出新的类别。<h1 id="BP神经网络概述"><a href="#BP神经网络概述" class="headerlink" title="BP神经网络概述"></a>BP神经网络概述</h1>BP神经网络是最重要的神经网络模型之一。<br>BP(backpropagation)算法也叫反向传播算法。<br>BP 算法的基本思想是 ：学习过程由信号的正向传播与误差的反向传播两个过程组成。 正向传播时，输入样本从输入层传入，经各隐含层处理后，传向输出层，若输出层的实际输出与期望的输出差值不符合要求，则转入误差的反向传播阶段。误差反向传播是将输出误差以某种形式通过隐含层向输入层逐层反向传播，并将误差分摊给各层的所有单元， 从而获得各层单元的误差信号，此误差信号即作为修正各单元的依据。这种信号正向传播与误差反向传播的各层权值调整过程，是周而复始地进行的。 权值不断调整的过程，也就是网络的学习训练过程。 此过程一直进行到网络输出的误差减少到可接受的程度或进行到预先设定的学习次数为止。 <h1 id="BP神经网络结构图"><a href="#BP神经网络结构图" class="headerlink" title="BP神经网络结构图"></a>BP神经网络结构图</h1><img src="http://oekcopstf.bkt.clouddn.com/BP结构图.png" alt="BP结构图"><h1 id="BP神经网络的学习过程"><a href="#BP神经网络的学习过程" class="headerlink" title="BP神经网络的学习过程"></a>BP神经网络的学习过程</h1><img src="http://oekcopstf.bkt.clouddn.com/BP学习过程.png" alt="BP神经网络的学习过程"><h1 id="BP算法推导、算法实现及应用"><a href="#BP算法推导、算法实现及应用" class="headerlink" title="BP算法推导、算法实现及应用"></a>BP算法推导、算法实现及应用</h1>有关BP算法的推导及算法实现，可参考<a href="http://blog.csdn.net/zhongkejingwang/article/details/44514073#什么是bp网络" target="_blank" rel="external">链接</a>。<br>自己搜索了一些资料做了一个PPT，里面有关于BP神经网络应用实例，感兴趣见百度网盘。<br>链接：<a href="http://pan.baidu.com/s/1qXTBQ2o" target="_blank" rel="external">http://pan.baidu.com/s/1qXTBQ2o</a> 密码：4dh7</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>您的支持将鼓励我努力创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://oekcopstf.bkt.clouddn.com/wechat.jpg" alt="Dreamsong WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://oekcopstf.bkt.clouddn.com/alipay.jpg" alt="Dreamsong Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/神经网络/" rel="tag"># 神经网络</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Java基础-引用类型操作符.html" rel="next" title="Java基础-引用类型操作符">
+                <i class="fa fa-chevron-left"></i> Java基础-引用类型操作符
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Mr-Gulou.html" rel="prev" title="鼓楼先生">
+                鼓楼先生 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oekcopstf.bkt.clouddn.com/%E5%B8%A6%E5%9C%9F.jpg"
+               alt="Dreamsong" />
+          <p class="site-author-name" itemprop="name">Dreamsong</p>
+          <p class="site-description motion-element" itemprop="description">绝望着，渴望着<br>哭着，笑着<br>平凡着...</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mxso" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2204471217" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Friends Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iamlay.com/" title="AimLay的技术博客" target="_blank">AimLay的技术博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hawait.github.io" title="坦坦的小屋" target="_blank">坦坦的小屋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络模型"><span class="nav-number">1.</span> <span class="nav-text">神经网络模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#人工神经元模型"><span class="nav-number">2.</span> <span class="nav-text">人工神经元模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络采用Sigmoid函数的原因"><span class="nav-number">3.</span> <span class="nav-text">神经网络采用Sigmoid函数的原因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络的训练学习"><span class="nav-number">4.</span> <span class="nav-text">神经网络的训练学习</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BP神经网络概述"><span class="nav-number">5.</span> <span class="nav-text">BP神经网络概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BP神经网络结构图"><span class="nav-number">6.</span> <span class="nav-text">BP神经网络结构图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BP神经网络的学习过程"><span class="nav-number">7.</span> <span class="nav-text">BP神经网络的学习过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BP算法推导、算法实现及应用"><span class="nav-number">8.</span> <span class="nav-text">BP算法推导、算法实现及应用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dreamsong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+
+    
+
+   
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+        <!-- UY END -->
+    
+  
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

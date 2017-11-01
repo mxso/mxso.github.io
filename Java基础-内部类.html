@@ -1,0 +1,846 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="内部类感觉听高端的，需要学会它的使用方法。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础-内部类">
+<meta property="og:url" content="http://songit.cn/Java基础-内部类.html">
+<meta property="og:site_name" content="Dreamsong&#39;s Blog">
+<meta property="og:description" content="内部类感觉听高端的，需要学会它的使用方法。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-22T12:41:59.025Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础-内部类">
+<meta name="twitter:description" content="内部类感觉听高端的，需要学会它的使用方法。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://songit.cn/Java基础-内部类.html"/>
+
+
+
+
+
+  <title> Java基础-内部类 | Dreamsong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Dreamsong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">隐居山林，潜心研究。</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://songit.cn/Java基础-内部类.html">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Dreamsong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oekcopstf.bkt.clouddn.com/%E5%B8%A6%E5%9C%9F.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Dreamsong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Dreamsong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java基础-内部类
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-22T22:33:23+08:00">
+                2017-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>内部类感觉听高端的，需要学会它的使用方法。<br><a id="more"></a></p>
+<h1 id="内部类概述"><a href="#内部类概述" class="headerlink" title="内部类概述"></a>内部类概述</h1><p>在一个类的内部定义的类就称为内部类。<br>内部类可以处于4中种访问级别（public、protected、默认和private）之一（而外部顶级类即类名和文件名相同的只能使用public和default）。<br>使用内部类最吸引人的原因是：每个内部类都能独立地继承一个（接口的）实现，所以无论外围类是否已经继承了某个（接口的）实现，对于内部类都没有影响。<br>为了方便起见，本文把最外层的类称为顶层类，把内部类所在的类称为外部类。Outer类是顶层类，Inner类是内部类，并且Outer类是Inner类的外部类。Tester类会访问Outer类和Inner类，因策把Tester类称为客户类。<br><em>注意：内部类是一个编译时的概念，一旦编译成功，就会成为完全不同的两类。对于一个名为outer的外部类和其内部定义的名为inner的内部类。编译完成后出现outer.class和outer$inner.class两类。所以内部类的成员变量/方法名可以和外部类的相同。</em></p>
+<h1 id="内部类的种类"><a href="#内部类的种类" class="headerlink" title="内部类的种类"></a>内部类的种类</h1><p>内部类可按照作用域进行分类。<br>它分为成员内部类和局部内部类两大类。成员内部类又可分为实例内部类和静态内部类。除此之外，匿名类是一种特殊的内部类。</p>
+<h1 id="成员内部类"><a href="#成员内部类" class="headerlink" title="成员内部类"></a>成员内部类</h1><p>顶层类只能处于public和默认访问级别，而成员内部类可以处于public、protected、默认和private这4中访问级别。<br>成员内部类也是最普通的内部类，它是外围类的一个成员，所以他是可以无限制的访问外围类的所有 成员属性和方法，尽管是private的，但是外围类要访问内部类的成员属性和方法则需要通过内部类实例来访问。</p>
+<h2 id="实例内部类"><a href="#实例内部类" class="headerlink" title="实例内部类"></a>实例内部类</h2><p>实例内部类是成员内部类的一种，没有static修饰。<br>实例内部类具有以下特点：</p>
+<ol>
+<li>在创建实例内部类的实例时，外部类的实例必须已经存在。例如要创建Inner类的实例，必须先创建Outer外部类的实例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Outer.Inner inner = new Outer().new Inner();</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>以上代码等价于：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Outer outer = new Outer();</div><div class="line">Outer.Inner inner = outer.new Inner();</div></pre></td></tr></table></figure></p>
+<p>以下代码会导致编译错误：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Outer.Inner inner = new Outer.Inner();</div></pre></td></tr></table></figure></p>
+<ol>
+<li>实例内部类的实例自动持有外部类的实例的引用。在内部类中，可以直接访问外部类的所有成员，包括成员变量和成员方法。</li>
+<li>外部类可以访问内部类的特定实例的成员变量和方法，但不能直接访问内部类的成员变量和方法。<br>例如，以下类A的test()方法一开始试图直接访问内部类B的b1和b2成员变量，这是非法的。接下来，test()方法创建了两个内部类B的实例，并且分别访问它们成员变量，这是合法的：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package innerref;</div><div class="line"></div><div class="line">public class A&#123;</div><div class="line">	class B&#123;  //类B是类A的内部类</div><div class="line">		private int b1=1;</div><div class="line">		public int b2=2;</div><div class="line">	&#125;</div><div class="line">public void test()&#123;</div><div class="line">	int v1=b1;  //编译错误，不能直接访问内部类B的成员变量b1</div><div class="line">	int v2=b2;  //编译错误，不能直接访问内部类B的成员变量b2</div><div class="line"></div><div class="line">	B x = new B();  //合法</div><div class="line">	int v3=x.b1;  //合法，可以通过内部类B的实例去访问变量b1</div><div class="line">	int v4=x.b2;  //合法，可以通过内部类B的实例去访问变量b2</div><div class="line"></div><div class="line">	B y new B();  //合法</div><div class="line">	y.b2=5;  //合法，可以通过内部类B的实例去访问变量b2	</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><em>Tips:在以上类A的test()方法中可以直接创建类B的实例，new B()语句相当于this.new B()语句，因此，新建的实例B引用当前实例A。</em></p>
+<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><p>静态内部类是成员内部类的一种，用static修饰，静态内部类的实例不依赖于外部类的特定实例。<br>静态内部类具有以下特点：</p>
+<ol>
+<li><p>静态内部类的实例不会自动持有外部类的特定实例的引用，在创建内部类的实例时，不必创建外部类的实例。<br>例如以下类A有一个静态内部类B，客户类Tester创建类B的实例时不必创建A的实例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">package staticnew;</div><div class="line"></div><div class="line">class A&#123;</div><div class="line">	public static class B&#123;</div><div class="line">		int v;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Tester&#123;</div><div class="line">	public void test()&#123;</div><div class="line">		A.B b = new A.B();</div><div class="line">		b.v=1;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>静态内部类可以直接访问外部类的静态成员，如果访问外部类的势实例成员，必须通过外部类的实例去访问。<br>例如在以下静态内部类B中，可以直接访问外部类A的静态变量a2，但是不能直接访问实例变量a1.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">package accessouter;</div><div class="line"></div><div class="line">class A&#123;</div><div class="line">	private int a1;        //实例变量a1</div><div class="line">	private static int a2; //静态变量a2</div><div class="line"></div><div class="line">	public static class B&#123;</div><div class="line">		int b1=a1;         //编译错误，不能直接访问外部类A的实例变量a1</div><div class="line">		int b2=a2;         //合法，可以直接访问外部类A的静态变量a2</div><div class="line">		int b3=new A().a1; //合法，可以通过类A的实例访问变量a1</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>客户类可以通过完整的类名直接访问静态内部类的静态成员。<br>例如，在以下例程中，Tester类可以通过A.B.v2的形式访问内部类B的静态变量v2，但是不能用A.B.v1的形式访问内部类B的实例变量v1。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">package visitstatic;</div><div class="line"></div><div class="line">class A&#123;</div><div class="line">	public static class B&#123;</div><div class="line">		int v1;</div><div class="line">		static int v2;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Tester&#123;</div><div class="line">	public void test()&#123;</div><div class="line">		A.B b = new A.B();</div><div class="line">		b.v1=1;</div><div class="line">		b.v2=1;</div><div class="line">        A.B.v1=1;  //编译错误</div><div class="line">        A.B.v2=1;  //合法</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="局部内部类"><a href="#局部内部类" class="headerlink" title="局部内部类"></a>局部内部类</h1><p>局部内部类是在一个方法中定义的内部类，他的可见范围是当前方法。和局部变量一样，局部内部类不能用访问控制修饰符（public、private和protected）及static修饰符来修饰。局部内部类具有以下特点：</p>
+<ol>
+<li>局部内部类只能在当前方法中使用。</li>
+<li>局部内部类和实例内部一样，可以直接访问外部类的所有成员，此外，局部内部类还可以访问所在方法中的final类型的参数和变量。例如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">package localacess;</div><div class="line"></div><div class="line">class A&#123;</div><div class="line">	int a;</div><div class="line"></div><div class="line">	public void method(final int p1,int p2)&#123;</div><div class="line">		int localV1=1;</div><div class="line">		final int localV2=2;</div><div class="line"></div><div class="line">		class B&#123;              //局部内部类</div><div class="line">			int b1=a;         //合法</div><div class="line">			int b2=p1;        //合法</div><div class="line">			int b3=p2;        //编译错误</div><div class="line">			int b4=localV1;   //编译错误</div><div class="line">			int b5=localv2;   //合法</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="匿名类"><a href="#匿名类" class="headerlink" title="匿名类"></a>匿名类</h1><p>匿名类是一种特殊的内部类，这种类没有名字。”new A(){…};”<em>(分号不能省略)</em>语句定义了一个继承类A的匿名类，大括号内是类A的类体，”new A(){…};”语句返回该匿名类的一个实例的引用。<br>匿名类具有以下特点：</p>
+<ol>
+<li>匿名类本身没有构造方法，但会调用父类的构造方法。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class A&#123;</div><div class="line">	A(int v)&#123;</div><div class="line">		System.out.println(&quot;another constructor&quot;);</div><div class="line">	&#125;</div><div class="line">	void method()&#123;</div><div class="line">		System.out.println(&quot;from A&quot;);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public static void main(String arg[])&#123;</div><div class="line">	int v=1;</div><div class="line">	A a = new A(v)&#123;    //匿名类</div><div class="line">	void method()&#123;</div><div class="line"> 			System.out.println(&quot;from anonymous&quot;);</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line">	a.method();        //打印from anonymous</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>以上代码的打印结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from constructor</div><div class="line">from anonymous</div></pre></td></tr></table></figure></p>
+<p>在以上的”new A(){…};”中，如果参数v是局部变量，并且在匿名类的类体中会使用它，那么v必须是final类型，否则会导致编译错误：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public static void main(String arg[])&#123;</div><div class="line">	int v=1;           //编译错误，v必须定义为final类型</div><div class="line">	A a = new A(v)&#123;    //匿名类</div><div class="line">	void method()&#123;</div><div class="line"> 			System.out.println(&quot;from anonymous&quot;+v);  //使用局部变量v</div><div class="line">		&#125;</div><div class="line">	&#125;;</div><div class="line">	a.method();        //打印from anonymous</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li>匿名类除了可以继承类，还可以实现接口。</li>
+<li>匿名类和局部内部类一样，可以访问外部类的所有成员，如果匿名类位于一个方法中，还能访问所在方法的final类型的变量和参数。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>您的支持将鼓励我努力创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://oekcopstf.bkt.clouddn.com/wechat.jpg" alt="Dreamsong WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://oekcopstf.bkt.clouddn.com/alipay.jpg" alt="Dreamsong Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/写出这些句子的人，我十辈子都追不上了.html" rel="next" title="写出这些句子的人，我十辈子都追不上了">
+                <i class="fa fa-chevron-left"></i> 写出这些句子的人，我十辈子都追不上了
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/PokeHeartComments.html" rel="prev" title="戳心“乐评”">
+                戳心“乐评” <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oekcopstf.bkt.clouddn.com/%E5%B8%A6%E5%9C%9F.jpg"
+               alt="Dreamsong" />
+          <p class="site-author-name" itemprop="name">Dreamsong</p>
+          <p class="site-description motion-element" itemprop="description">绝望着，渴望着<br>哭着，笑着<br>平凡着...</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mxso" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2204471217" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Friends Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iamlay.com/" title="AimLay的技术博客" target="_blank">AimLay的技术博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hawait.github.io" title="坦坦的小屋" target="_blank">坦坦的小屋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内部类概述"><span class="nav-number">1.</span> <span class="nav-text">内部类概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内部类的种类"><span class="nav-number">2.</span> <span class="nav-text">内部类的种类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#成员内部类"><span class="nav-number">3.</span> <span class="nav-text">成员内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实例内部类"><span class="nav-number">3.1.</span> <span class="nav-text">实例内部类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#静态内部类"><span class="nav-number">3.2.</span> <span class="nav-text">静态内部类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#局部内部类"><span class="nav-number">4.</span> <span class="nav-text">局部内部类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#匿名类"><span class="nav-number">5.</span> <span class="nav-text">匿名类</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dreamsong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+
+    
+
+   
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+        <!-- UY END -->
+    
+  
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

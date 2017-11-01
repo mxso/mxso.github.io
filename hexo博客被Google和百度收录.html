@@ -1,0 +1,828 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo,Google,百度," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="个人博客搭建的差不多了，但是还没有什么人气，于是就想让百度和Google搜索到自己的博客，于是又开始折腾了。生命在于折腾么！哈哈~下面就是我将自己的博客被百度Google收录的过程。">
+<meta name="keywords" content="Hexo,Google,百度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo博客被Google和百度收录">
+<meta property="og:url" content="http://songit.cn/hexo博客被Google和百度收录.html">
+<meta property="og:site_name" content="Dreamsong&#39;s Blog">
+<meta property="og:description" content="个人博客搭建的差不多了，但是还没有什么人气，于是就想让百度和Google搜索到自己的博客，于是又开始折腾了。生命在于折腾么！哈哈~下面就是我将自己的博客被百度Google收录的过程。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/Google%20Search%20Console.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/Google-robots-test.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/Googlesitemap.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/Googlesitemap2.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/Google抓取工具界面.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/Baidu提交网址.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/Baidu链接提交.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/BaiduRobotstest.png">
+<meta property="og:updated_time" content="2017-01-13T11:58:54.440Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo博客被Google和百度收录">
+<meta name="twitter:description" content="个人博客搭建的差不多了，但是还没有什么人气，于是就想让百度和Google搜索到自己的博客，于是又开始折腾了。生命在于折腾么！哈哈~下面就是我将自己的博客被百度Google收录的过程。">
+<meta name="twitter:image" content="http://oekcopstf.bkt.clouddn.com/Google%20Search%20Console.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://songit.cn/hexo博客被Google和百度收录.html"/>
+
+
+
+
+
+  <title> hexo博客被Google和百度收录 | Dreamsong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Dreamsong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">隐居山林，潜心研究。</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://songit.cn/hexo博客被Google和百度收录.html">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Dreamsong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oekcopstf.bkt.clouddn.com/%E5%B8%A6%E5%9C%9F.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Dreamsong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Dreamsong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                hexo博客被Google和百度收录
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-01-09T19:09:50+08:00">
+                2017-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>个人博客搭建的差不多了，但是还没有什么人气，于是就想让百度和Google搜索到自己的博客，于是又开始折腾了。生命在于折腾么！哈哈~下面就是我将自己的博客被百度Google收录的过程。<br><a id="more"></a></p>
+<h1 id="生成sitemap站点地图"><a href="#生成sitemap站点地图" class="headerlink" title="生成sitemap站点地图"></a>生成sitemap站点地图</h1><p>安装sitemap站点地图自动生成插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-generator-sitemap --save</div><div class="line">npm install hexo-generator-baidu-sitemap --save</div></pre></td></tr></table></figure></p>
+<p>在站点配置文章中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 自动生成sitemap</div><div class="line">sitemap: </div><div class="line">  path: sitemap.xml</div><div class="line">baidusitemap:</div><div class="line">  path: baidusitemap.xml</div></pre></td></tr></table></figure></p>
+<p><strong>注</strong>:上面的格式一定要正确，一定要有缩进。直接复制我的就行。<br>配置好后，执行<code>hexo g</code>就能在your-hexo-site\public中生成sitemap.xml和baidusitemap.xml了,其中第一个是要提交给google的，后面那个是提交给Baidu的，我把两个文件都提交百度了，Google只提交了一个，另一个提示有错误。<br>在source文件夹下添加robot.txt，内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># hexo robots.txt</div><div class="line">User-agent: *</div><div class="line">Allow: /</div><div class="line">Allow: /archives/</div><div class="line">Allow: /categories/</div><div class="line">Allow: /tags/</div><div class="line"></div><div class="line">Disallow: /vendors/</div><div class="line">Disallow: /js/</div><div class="line">Disallow: /css/</div><div class="line">Disallow: /fonts/</div><div class="line">Disallow: /vendors/</div><div class="line">Disallow: /fancybox/</div><div class="line"></div><div class="line">Sitemap: http://www.songit.cn/sitemap.xml</div><div class="line">Sitemap: http://www.songit.cn/baidusitemap.xml</div></pre></td></tr></table></figure></p>
+<p>把最后两行中的网址改成自己的网址就行了。然后布署下，在浏览器地址栏输入自己的站点地图的地址就可以看到自己的站点地图了。</p>
+<h1 id="提交给Google站长"><a href="#提交给Google站长" class="headerlink" title="提交给Google站长"></a>提交给Google站长</h1><h2 id="添加网址"><a href="#添加网址" class="headerlink" title="添加网址"></a>添加网址</h2><p>进入<a href="https://www.google.com/webmasters/" target="_blank" rel="external">Google Search Console</a>，相信大家都有Google账号吧。没有的话注册个账号吧，然后登录进去即可。<br><img src="http://oekcopstf.bkt.clouddn.com/Google%20Search%20Console.png" alt="Google Search Console"><br>点添加属性，把自己的域名输入进去即可。然后Google会让你验证你对网站的所有权，所以在这里用的是备用方法&gt;域名提供商&gt;其他，我的域名是在万网买的，所以选的其他。然后在DNS解析添加CNAME，具体见另一篇文章<a href="http://songit.cn/hexo博客域名解析.html">《hexo博客域名解析》</a>。验证成功后，</p>
+<h2 id="测试robots文件"><a href="#测试robots文件" class="headerlink" title="测试robots文件"></a>测试robots文件</h2><p><img src="http://oekcopstf.bkt.clouddn.com/Google-robots-test.png" alt="Google-robots-test">确保无误即可。</p>
+<h2 id="提交站点地图sitemap"><a href="#提交站点地图sitemap" class="headerlink" title="提交站点地图sitemap"></a>提交站点地图sitemap</h2><p><img src="http://oekcopstf.bkt.clouddn.com/Googlesitemap.png" alt="Googlesitemap"><br>右上角添加/测试站点地图，添加自己的站点地图，如图<br><img src="http://oekcopstf.bkt.clouddn.com/Googlesitemap2.png" alt="Googlesitemap2"></p>
+<h2 id="Google抓取工具"><a href="#Google抓取工具" class="headerlink" title="Google抓取工具"></a>Google抓取工具</h2><p><img src="http://oekcopstf.bkt.clouddn.com/Google抓取工具界面.png" alt="Google抓取工具界面"><br>在这里填上需要抓取的url,不填的话默认抓取首页，抓取类型分为桌面，智能手机两种，自行根据需要选择。填好url之后，点击抓取。之后，提交至索引，根据提示操作就可以了。</p>
+<h1 id="提交给百度站长"><a href="#提交给百度站长" class="headerlink" title="提交给百度站长"></a>提交给百度站长</h1><p>在国内，相信大部分人都在用百度搜索东西吧。所以百度到自己的网站很重要啊。</p>
+<h2 id="添加网址-1"><a href="#添加网址-1" class="headerlink" title="添加网址"></a>添加网址</h2><p>百度提交网址入口<a href="http://zhanzhang.baidu.com/site/siteadd" target="_blank" rel="external">点这里</a><br><img src="http://oekcopstf.bkt.clouddn.com/Baidu提交网址.png" alt="baidu提交网址"><br>提交过后，同样会有一个验证网站步骤，我选择的第三种验证CNAME方式，在域名解析中添加记录值，解析详见<a href="http://songit.cn/hexo博客域名解析.html">《hexo博客域名解析》</a>。这里我把带www和不带www的网址都添加进去了，我设置的带www自动跳转到顶级域名songit.cn。</p>
+<h2 id="提交站点地图Baidusitemap"><a href="#提交站点地图Baidusitemap" class="headerlink" title="提交站点地图Baidusitemap"></a>提交站点地图Baidusitemap</h2><p><img src="http://oekcopstf.bkt.clouddn.com/Baidu链接提交.png" alt="Baidu链接提交"><br>在这个界面选择自动提交&gt;sitemap，然后提交自己的站点地图网址，我的是<br><code>http://songit.cn/sitemap.xml
+http://songit.cn/baidusitemap.xml</code>，输入验证码提交即可。</p>
+<h2 id="Robots测试"><a href="#Robots测试" class="headerlink" title="Robots测试"></a>Robots测试</h2><p><img src="http://oekcopstf.bkt.clouddn.com/BaiduRobotstest.png" alt="BaiduRobotstest"><br>检测无误即可。</p>
+<p>接下来就等待被Google和百度收录吧。我的收录还是挺快的，大约过几个小时吧。快的话几十分钟就能搜到自己的网站了。赶紧去试试吧。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>您的支持将鼓励我努力创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://oekcopstf.bkt.clouddn.com/wechat.jpg" alt="Dreamsong WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://oekcopstf.bkt.clouddn.com/alipay.jpg" alt="Dreamsong Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+            <a href="/tags/Google/" rel="tag"># Google</a>
+          
+            <a href="/tags/百度/" rel="tag"># 百度</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexo博客域名解析.html" rel="next" title="hexo博客域名解析">
+                <i class="fa fa-chevron-left"></i> hexo博客域名解析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Let-me-stay-with-you.html" rel="prev" title="让我留在你身边">
+                让我留在你身边 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oekcopstf.bkt.clouddn.com/%E5%B8%A6%E5%9C%9F.jpg"
+               alt="Dreamsong" />
+          <p class="site-author-name" itemprop="name">Dreamsong</p>
+          <p class="site-description motion-element" itemprop="description">绝望着，渴望着<br>哭着，笑着<br>平凡着...</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mxso" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2204471217" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Friends Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iamlay.com/" title="AimLay的技术博客" target="_blank">AimLay的技术博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hawait.github.io" title="坦坦的小屋" target="_blank">坦坦的小屋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#生成sitemap站点地图"><span class="nav-number">1.</span> <span class="nav-text">生成sitemap站点地图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#提交给Google站长"><span class="nav-number">2.</span> <span class="nav-text">提交给Google站长</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加网址"><span class="nav-number">2.1.</span> <span class="nav-text">添加网址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试robots文件"><span class="nav-number">2.2.</span> <span class="nav-text">测试robots文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交站点地图sitemap"><span class="nav-number">2.3.</span> <span class="nav-text">提交站点地图sitemap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Google抓取工具"><span class="nav-number">2.4.</span> <span class="nav-text">Google抓取工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#提交给百度站长"><span class="nav-number">3.</span> <span class="nav-text">提交给百度站长</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加网址-1"><span class="nav-number">3.1.</span> <span class="nav-text">添加网址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提交站点地图Baidusitemap"><span class="nav-number">3.2.</span> <span class="nav-text">提交站点地图Baidusitemap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Robots测试"><span class="nav-number">3.3.</span> <span class="nav-text">Robots测试</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dreamsong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+
+    
+
+   
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+        <!-- UY END -->
+    
+  
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

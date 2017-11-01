@@ -1,0 +1,849 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Windows Server,IIS,域名," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="大约一年前，笔者拥有了人生中的第一个域名dreamsongmxs.cn，时间长了，就觉得这个域名太长了，不便于读者记忆，于是便想了又想，又买下了现在这个域名songit.cn,所以你们要买域名一定要想好对于自己有意义的域名而且好记的啊，不然遇到合适的域名你还是会动心，到时候就浪费了。我的一个哥们就注册了3个，最后还是只用一个，他的域名点这里查看。所以我之前的那个域名就被闲置下来，另外我还有一个闲置">
+<meta name="keywords" content="Windows Server,IIS,域名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用IIS实现域名跳转">
+<meta property="og:url" content="http://songit.cn/URLJUMP.html">
+<meta property="og:site_name" content="Dreamsong&#39;s Blog">
+<meta property="og:description" content="大约一年前，笔者拥有了人生中的第一个域名dreamsongmxs.cn，时间长了，就觉得这个域名太长了，不便于读者记忆，于是便想了又想，又买下了现在这个域名songit.cn,所以你们要买域名一定要想好对于自己有意义的域名而且好记的啊，不然遇到合适的域名你还是会动心，到时候就浪费了。我的一个哥们就注册了3个，最后还是只用一个，他的域名点这里查看。所以我之前的那个域名就被闲置下来，另外我还有一个闲置">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/%E9%80%89%E6%8B%A9iis%E5%B7%A5%E5%85%B7.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/HTTP%E9%87%8D%E5%91%BD%E5%90%8D%E8%AE%BE%E7%BD%AE.png">
+<meta property="og:image" content="http://oekcopstf.bkt.clouddn.com/dreamsongmxs%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90.png">
+<meta property="og:updated_time" content="2017-05-25T14:40:37.830Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用IIS实现域名跳转">
+<meta name="twitter:description" content="大约一年前，笔者拥有了人生中的第一个域名dreamsongmxs.cn，时间长了，就觉得这个域名太长了，不便于读者记忆，于是便想了又想，又买下了现在这个域名songit.cn,所以你们要买域名一定要想好对于自己有意义的域名而且好记的啊，不然遇到合适的域名你还是会动心，到时候就浪费了。我的一个哥们就注册了3个，最后还是只用一个，他的域名点这里查看。所以我之前的那个域名就被闲置下来，另外我还有一个闲置">
+<meta name="twitter:image" content="http://oekcopstf.bkt.clouddn.com/%E9%80%89%E6%8B%A9iis%E5%B7%A5%E5%85%B7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://songit.cn/URLJUMP.html"/>
+
+
+
+
+
+  <title> 使用IIS实现域名跳转 | Dreamsong's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Dreamsong's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <h1 class="site-subtitle" itemprop="description">隐居山林，潜心研究。</h1>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-edit"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://songit.cn/URLJUMP.html">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Dreamsong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://oekcopstf.bkt.clouddn.com/%E5%B8%A6%E5%9C%9F.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="Dreamsong's Blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="Dreamsong's Blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用IIS实现域名跳转
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-25T11:17:14+08:00">
+                2017-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>大约一年前，笔者拥有了人生中的第一个域名<a href="http://dreamsongmxs.cn" target="_blank" rel="external">dreamsongmxs.cn</a>，时间长了，就觉得这个域名太长了，不便于读者记忆，于是便想了又想，又买下了现在这个域名<a href="http://songit.cn">songit.cn</a>,所以你们要买域名一定要想好对于自己有意义的域名而且好记的啊，不然遇到合适的域名你还是会动心，到时候就浪费了。我的一个哥们就注册了3个，最后还是只用一个，他的域名点<a href="http://iamlay.com" target="_blank" rel="external">这里</a>查看。所以我之前的那个域名就被闲置下来，另外我还有一个闲置的云主机，于是就想通过云主机来实现域名的跳转，让我之前那个域名可以跳转到现在的这个域名。下面就来说下我怎么实现的吧。<br><a id="more"></a></p>
+<p><strong>域名重定向的意义</strong>   当域名或者目录变更的情况，把旧域名的访问请求重新引导到新域名上。不管是对于普通用户还是搜索引擎都是十分友好的，也有人利用域名重定向来作弊。</p>
+<p><strong>301重定向跳转对搜索引擎的好处</strong></p>
+<ol>
+<li>增加域名权重</li>
+<li>对网页收录的优化</li>
+<li>有利于网页PR传递 </li>
+<li>可促进搜索引擎优化效果 </li>
+<li>对用户体验表示友好</li>
+</ol>
+<p>由于笔者对Linux还不是太了解，就把云主机装了Windows Server 2012 R2系统。以后会学习Linux再用Linux实现这个功能。</p>
+<h1 id="远程连接云主机"><a href="#远程连接云主机" class="headerlink" title="远程连接云主机"></a>远程连接云主机</h1><ol>
+<li>同时按下<strong>win+R</strong>键</li>
+<li>运行框中输入<em>mstsc</em></li>
+<li>在计算机框中输入云主机的公网IP地址（笔者这里是118.89.33.43）</li>
+<li>点击连接，输入云主机密码（为了方便下次连接云主机，可根据需要选择记住凭据）。</li>
+<li>然后确定就可以进入云主机了。</li>
+</ol>
+<h1 id="Windows-Server-2012-IIS配置安装"><a href="#Windows-Server-2012-IIS配置安装" class="headerlink" title="Windows Server 2012 IIS配置安装"></a>Windows Server 2012 IIS配置安装</h1><ol>
+<li>单击状态栏中的<strong>服务器管理器</strong></li>
+<li>在“仪表板”中单击<strong>添加角色和功能</strong></li>
+<li>在“开始之前”界面直接点击<strong>下一步</strong></li>
+<li>在“安装类型”界面单击<strong>基于角色或基于功能的安装</strong>，再单击<strong>下一步</strong></li>
+<li>在“服务器选择”界面单击<strong>从服务器池中选择服务器</strong>，再单击<strong>本服务器的计算机名</strong>，这个ip上只有本机，直接单击<strong>下一步</strong></li>
+<li>在“服务器角色”界面找到并勾选<strong>Web服务器(IIS)</strong></li>
+<li>弹出子对话框“添加角色和功能向导”，直接单击<strong>添加功能</strong></li>
+<li>在“功能”界面，找到并勾选<strong>.Net Framewore 3.5</strong>和<strong>.Net Framewore 4.5</strong>（4.5一般已安装）</li>
+<li>在“角色服务器”界面，中间角色服务列表选择需要安装的项目（如果你不知道需要选哪些，建议你全部都勾选它[Ftp服务器除外]，这里我们会用到Http重定向功能，这个一定要勾选），点击<strong>下一步</strong></li>
+<li>在“确认”界面确认下所勾选的安装组件，然后单击<strong>安装</strong></li>
+<li>在“结果”界面，windows 2012 Server IIS开始安装，等几分钟后，安装成功，点击<strong>关闭</strong></li>
+<li>查看windows 2012 Server IIS8.0安装和运行结果：打开浏览器，输入本机公网ip，或者本机内网ip，或localhost均可，便能看到IIS界面显示出来</li>
+</ol>
+<h1 id="IIS实现HTTP重定向"><a href="#IIS实现HTTP重定向" class="headerlink" title="IIS实现HTTP重定向"></a>IIS实现HTTP重定向</h1><ol>
+<li>在“仪表板”界面点击<strong>工具</strong>，选择<strong>Internet Information Services（IIS）管理器</strong>，如图所示。<br><img src="http://oekcopstf.bkt.clouddn.com/%E9%80%89%E6%8B%A9iis%E5%B7%A5%E5%85%B7.png" alt="IIS管理器"></li>
+<li>在左侧栏里点中一串数字（内网IP），会出现应用程序池和网站两个小图标，网站还能下拉，点中<strong>Default Web Site</strong>(这个是服务器本身IP的网址)</li>
+<li>在右侧“Default Web Site主页”有许多图标，双击<strong>HTTP重定向</strong></li>
+<li>在“HTTP重定向”界面，设置自己要跳转到的网址，笔者的是<em><a href="http://songit.cn">http://songit.cn</a></em>（一定要记得加上<em>http://</em>），“重定向行为”选项中，勾选<strong>将所有请求重定向到确切的目标（而不是相对于目标）（E）</strong>，“状态代码”下拉栏中选择<strong>永久（301）</strong>，如图所示。<br><img src="http://oekcopstf.bkt.clouddn.com/HTTP%E9%87%8D%E5%91%BD%E5%90%8D%E8%AE%BE%E7%BD%AE.png" alt="HTTP重定向设置"></li>
+<li>在“操作”栏中点击<strong>应用</strong>即可</li>
+</ol>
+<h1 id="原域名的域名解析"><a href="#原域名的域名解析" class="headerlink" title="原域名的域名解析"></a>原域名的域名解析</h1><p><img src="http://oekcopstf.bkt.clouddn.com/dreamsongmxs%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90.png" alt="dreamsongmxs域名解析"><br>添加如上所示两条记录便可以实现原域名跳转到自己想要实现的域名了。其中A记录类型中的记录值为云主机的公网IP。</p>
+<p>这就是笔者使用IIS管理器实现域名跳转的全部步骤了，笔者的<a href="http://dreamsongmxs.cn" target="_blank" rel="external">原域名</a>已经可以指向现在的这个<a href="http://songit.cn">新域名</a>了。想要实现的小伙伴可以试下。<br>如有不足之处，还请指出。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>您的支持将鼓励我努力创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://oekcopstf.bkt.clouddn.com/wechat.jpg" alt="Dreamsong WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://oekcopstf.bkt.clouddn.com/alipay.jpg" alt="Dreamsong Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Windows-Server/" rel="tag"># Windows Server</a>
+          
+            <a href="/tags/IIS/" rel="tag"># IIS</a>
+          
+            <a href="/tags/域名/" rel="tag"># 域名</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/MySQLCrashCourse.html" rel="next" title="MySQL入门知识点">
+                <i class="fa fa-chevron-left"></i> MySQL入门知识点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/MysqlError.html" rel="prev" title="Windows下Mysql免安装版出现的常见错误（1045,1054,1820）">
+                Windows下Mysql免安装版出现的常见错误（1045,1054,1820） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://oekcopstf.bkt.clouddn.com/%E5%B8%A6%E5%9C%9F.jpg"
+               alt="Dreamsong" />
+          <p class="site-author-name" itemprop="name">Dreamsong</p>
+          <p class="site-description motion-element" itemprop="description">绝望着，渴望着<br>哭着，笑着<br>平凡着...</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/mxso" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/u/2204471217" target="_blank" title="weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  weibo
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Friends Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://iamlay.com/" title="AimLay的技术博客" target="_blank">AimLay的技术博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hawait.github.io" title="坦坦的小屋" target="_blank">坦坦的小屋</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#远程连接云主机"><span class="nav-number">1.</span> <span class="nav-text">远程连接云主机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-Server-2012-IIS配置安装"><span class="nav-number">2.</span> <span class="nav-text">Windows Server 2012 IIS配置安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IIS实现HTTP重定向"><span class="nav-number">3.</span> <span class="nav-text">IIS实现HTTP重定向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原域名的域名解析"><span class="nav-number">4.</span> <span class="nav-text">原域名的域名解析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dreamsong</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+  
+
+    
+
+   
+        <!-- UY BEGIN -->
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid="></script>
+        <!-- UY END -->
+    
+  
+
+
+  
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
