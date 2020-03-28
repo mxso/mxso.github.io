@@ -1,0 +1,23 @@
+ssh-keygen -t rsa -C "email@email.com"
+ssh -T git@github.com
+
+npm install -g hexo-cli
+
+$ hexo init <folder>
+$ cd <folder>
+$ npm install
+
+npm install hexo-deployer-git --save
+
+npm install hexo-generator-sitemap --save
+npm install hexo-generator-baidu-sitemap --save
+
+npm install hexo-qiniu-sync --save
+
+npm install hexo-generator-search --save
+npm install hexo-generator-searchdb --save
+npm install hexo-generator-feed --save
+npm install hexo-generator-seo-friendly-sitemap --save
+
+npm install hexo-wordcount --save
+

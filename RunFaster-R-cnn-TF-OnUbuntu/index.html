@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,CUDA,Tensorflow,神经网络,Linux,Opencv,RCNN," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Dreamsong's Blog" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="这篇文章主要记录我在电脑上跑一下Faster RCNN的demo.py的艰辛路程。期间出现了无限问题，好在结果终于成功了。">
+<meta name="keywords" content="Python,CUDA,Tensorflow,神经网络,Linux,Opencv,RCNN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu16.04+CUDA9.0+CUDNN7.0+Faster RCNN+Tensorflow1.5">
+<meta property="og:url" content="http://songit.cn/RunFaster-R-cnn-TF-OnUbuntu/index.html">
+<meta property="og:site_name" content="Dreamsong&#39;s Blog">
+<meta property="og:description" content="这篇文章主要记录我在电脑上跑一下Faster RCNN的demo.py的艰辛路程。期间出现了无限问题，好在结果终于成功了。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://songit.cn/imgs/FasterRCNNdemo.jpg">
+<meta property="og:image" content="http://songit.cn/imgs/TFRRCNN_demo_1.png">
+<meta property="og:image" content="http://songit.cn/imgs/TFRRCNN_demo_2.png">
+<meta property="og:image" content="http://songit.cn/imgs/TFRRCNN_demo_3.png">
+<meta property="og:image" content="http://songit.cn/imgs/TFRRCNN_demo_4.png">
+<meta property="og:image" content="http://songit.cn/imgs/TFRRCNN_demo_5.png">
+<meta property="og:image" content="http://songit.cn/imgs/TFRRCNN_demo_6.png">
+<meta property="og:image" content="http://songit.cn/imgs/TFRRCNN_demo_7.png">
+<meta property="og:updated_time" content="2018-12-05T09:19:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu16.04+CUDA9.0+CUDNN7.0+Faster RCNN+Tensorflow1.5">
+<meta name="twitter:description" content="这篇文章主要记录我在电脑上跑一下Faster RCNN的demo.py的艰辛路程。期间出现了无限问题，好在结果终于成功了。">
+<meta name="twitter:image" content="http://songit.cn/imgs/FasterRCNNdemo.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://songit.cn/RunFaster-R-cnn-TF-OnUbuntu/"/>
+
+
+
+
+
+  <title>Ubuntu16.04+CUDA9.0+CUDNN7.0+Faster RCNN+Tensorflow1.5 | Dreamsong's Blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dreamsong's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">隐居山林，潜心研究。</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br />
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://songit.cn/RunFaster-R-cnn-TF-OnUbuntu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Dreamsong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dreamsong's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Ubuntu16.04+CUDA9.0+CUDNN7.0+Faster RCNN+Tensorflow1.5</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T15:45:42+08:00">
+                2018-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tech/" itemprop="url" rel="index">
+                    <span itemprop="name">Tech</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/RunFaster-R-cnn-TF-OnUbuntu/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="RunFaster-R-cnn-TF-OnUbuntu/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>&nbsp阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇文章主要记录我在电脑上跑一下Faster RCNN的demo.py的艰辛路程。期间出现了无限问题，好在结果终于成功了。<br><a id="more"></a></p>
+<h1 id="Win10-Ubuntu16-04双系统安装"><a href="#Win10-Ubuntu16-04双系统安装" class="headerlink" title="Win10+Ubuntu16.04双系统安装"></a>Win10+Ubuntu16.04双系统安装</h1><p>关于这部分网上有很多教程，这里就不放链接了。<br>简单的流程就是：</p>
+<ol>
+<li>压缩一未分配空间（最好大于50G）</li>
+<li>UltraISO等软件，将Ubuntu系统写入U盘。</li>
+<li>禁用安全启动和快速启动。</li>
+<li>U盘启动并逐步安装，与Win10并存。（执行第一步，系统会自动选择未分配空间。）</li>
+<li>等待安装完成。<br><em>[注]在安装Faster-R-cnn整个过程我安装了两次系统，期间遇到系统进不去系统，没有引导，最后在网上试了好多引导修复的软件都不行，进入PE系统，最后下载了一个某杀毒软件报毒的软件进去直接修复好了，哈哈，一般情况下是不会出现这样的情况的，放心安装吧</em></li>
+</ol>
+<h1 id="安装CUDA-CUDNN"><a href="#安装CUDA-CUDNN" class="headerlink" title="安装CUDA+CUDNN"></a>安装CUDA+CUDNN</h1><h2 id="安装显卡驱动"><a href="#安装显卡驱动" class="headerlink" title="安装显卡驱动"></a>安装显卡驱动</h2><p>先执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update</div><div class="line">sudo apt-get upgrade</div></pre></td></tr></table></figure></p>
+<p>在系统设置-&gt;软件更新-&gt;附加驱动里选择Nvidia最新驱动应用安装即可。<br>在终端执行<code>nvidia-smi</code>，确认是否驱动安装。</p>
+<h2 id="安装CUDA"><a href="#安装CUDA" class="headerlink" title="安装CUDA"></a>安装CUDA</h2><p>我安装的是<a href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" rel="external">CUDA9.0</a>，Tensorflow最新版已经支持CUDA9.0，下载安装后执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb</div><div class="line">sudo apt-key add /var/cuda-repo-&lt;version&gt;/7fa2af80.pub</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install cuda</div></pre></td></tr></table></figure></p>
+<p>然后在<code>.bashrc</code>文件里添加环境变量：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export PATH=/usr/local/cuda/bin$&#123;PATH:+:$&#123;PATH&#125;&#125;</div><div class="line">export LD_LIBRARY_PATH=/usr/local/cuda/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;</div><div class="line">export CUDA_HOME=/usr/local/cuda</div></pre></td></tr></table></figure></p>
+<p>在终端执行<code>source ~/.bashrc</code>即可生效。</p>
+<h2 id="安装CUDNN"><a href="#安装CUDNN" class="headerlink" title="安装CUDNN"></a>安装CUDNN</h2><p>安装<a href="https://developer.nvidia.com/cudnn" target="_blank" rel="external">CUDNN7.0</a> for CUDA9.0，选择Linux版本。下载（下载需要注册）后解压，然后执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo cp cuda/include/cudnn.h /usr/local/cuda/include/</div><div class="line">sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64/ -d</div><div class="line">sudo chmod a+r /usr/local/cuda/include/cudnn.h</div><div class="line">sudo chmod a+r /usr/local/cuda/lib64/libcudnn*</div></pre></td></tr></table></figure></p>
+<h1 id="安装Anaconda3"><a href="#安装Anaconda3" class="headerlink" title="安装Anaconda3"></a>安装Anaconda3</h1><p>安装好了Ubuntu16.04（自带python2.7）后，我有下载安装了<a href="https://www.anaconda.com/download/" target="_blank" rel="external">Anaconda3</a>，anaconda指的是一个开源的Python发行版本，其包含了conda、Python等180多个科学包及其依赖项，还包含了大量的科学包，方便实用，建议使用。</p>
+<h1 id="安装Tensorflow"><a href="#安装Tensorflow" class="headerlink" title="安装Tensorflow"></a>安装Tensorflow</h1><h2 id="创建新环境（python-2-7）"><a href="#创建新环境（python-2-7）" class="headerlink" title="创建新环境（python=2.7）"></a>创建新环境（python=2.7）</h2><p><code>conda create -n tensorflow python=2.7</code><br>代码里tensorflow是环境名称，可以自己定义。<br><em>[注]因为执行网上Faster RCNN代码是用python2写的，python2和3不兼容会产生很多错误，建议安装python2.7，我在这里进了很大一个坑，先前安装的是python3.5版本，也把代码2到3过渡了一下，还是会出现很多错误，坑惨我了。</em></p>
+<h2 id="激活tensorflow环境"><a href="#激活tensorflow环境" class="headerlink" title="激活tensorflow环境"></a>激活tensorflow环境</h2><p><code>source activate tensorflow</code></p>
+<h2 id="安装tensorflow"><a href="#安装tensorflow" class="headerlink" title="安装tensorflow"></a>安装tensorflow</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install python-pip python-dev</div><div class="line">pip install --ignore-installed --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0-cp27-none-linux_x86_64.whl</div></pre></td></tr></table></figure>
+<p>安装后验证一下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(tensorflow)$ python  </div><div class="line">&gt;&gt;import tensorflow as tf  </div><div class="line">&gt;&gt;a = tf.constant(&apos;Hello, TensorFlow!&apos;)  </div><div class="line">&gt;&gt;sess = tf.Session()  </div><div class="line">&gt;&gt;sess.run(a)</div></pre></td></tr></table></figure></p>
+<h1 id="安装Opencv"><a href="#安装Opencv" class="headerlink" title="安装Opencv"></a>安装Opencv</h1><h2 id="安装系统依赖包"><a href="#安装系统依赖包" class="headerlink" title="安装系统依赖包"></a>安装系统依赖包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"># 移除先前安装的x264&lt;/h3&gt;</div><div class="line">sudo apt-get remove x264 libx264-dev</div><div class="line"></div><div class="line">#安装依赖项</div><div class="line">sudo apt-get install build-essential checkinstall cmake pkg-config yasm</div><div class="line">sudo apt-get install git gfortran</div><div class="line">sudo apt-get install libjpeg8-dev libjasper-dev libpng12-dev</div><div class="line"></div><div class="line">#  Ubuntu 14.04</div><div class="line">sudo apt-get install libtiff4-dev</div><div class="line">#  Ubuntu 16.04</div><div class="line">sudo apt-get install libtiff5-dev</div><div class="line"></div><div class="line">sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev</div><div class="line">sudo apt-get install libxine2-dev libv4l-dev</div><div class="line">sudo apt-get install libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev</div><div class="line">sudo apt-get install libqt5-dev libgtk2.0-dev libtbb-dev</div><div class="line">sudo apt-get install libatlas-base-dev</div><div class="line">sudo apt-get install libfaac-dev libmp3lame-dev libtheora-dev</div><div class="line">sudo apt-get install libvorbis-dev libxvidcore-dev</div><div class="line">sudo apt-get install libopencore-amrnb-dev libopencore-amrwb-dev</div><div class="line">sudo apt-get install x264 v4l-utils</div><div class="line"></div><div class="line"># 可选依赖项，一般DL都需要</div><div class="line">sudo apt-get install libprotobuf-dev protobuf-compiler</div><div class="line">sudo apt-get install libgoogle-glog-dev libgflags-dev</div><div class="line">sudo apt-get install libgphoto2-dev libeigen3-dev libhdf5-dev doxygen</div></pre></td></tr></table></figure>
+<h2 id="下载Opencv3-4-1和OpenCV-contrib"><a href="#下载Opencv3-4-1和OpenCV-contrib" class="headerlink" title="下载Opencv3.4.1和OpenCV_contrib"></a>下载Opencv3.4.1和OpenCV_contrib</h2><p>在浏览器上直接下载<a href="https://github.com/opencv/opencv/archive/3.4.1.zip" target="_blank" rel="external">Opencv3.4.1</a>和<a href="https://github.com/opencv/opencv_contrib/archive/3.4.1.zip" target="_blank" rel="external">OpenCV_contrib</a>即可。</p>
+<p>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd opencv-3.4.1</div><div class="line">mkdir build</div><div class="line">cd build</div></pre></td></tr></table></figure></p>
+<p>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D WITH_QT=ON -D WITH_OPENMP=ON -D BUILD_TIFF=ON -D BUILD_opencv_java=OFF -D OPENCV_EXTRA_MODULES_PATH=/home/dreamsong/software/opencv_contrib-3.4.1/modules -D WITH_OPENGL=ON ..</div></pre></td></tr></table></figure></p>
+<p>其中文件地址相应修改成你的文件目录即可。<br><code>-D WITH_OPENMP=ON</code>要加上去，否则会出现<code>Makefile:160: recipe for target &#39;all&#39; failed</code>问题。<br>进一步执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">make -j16  #16是线程，我电脑是8核16线程，所以写的16</div><div class="line">sudo make install</div><div class="line">sudo sh -c &apos;echo &quot;/usr/local/lib&quot; &gt;&gt; /etc/ld.so.conf.d/opencv.conf&apos;</div><div class="line">sudo ldconfig</div></pre></td></tr></table></figure></p>
+<p>制作软连接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /home/dreamsong/software/anaconda3/envs/tensorflow/lib/python2.7/site-packages</div><div class="line">ln -s /usr/local/lib/python2.7/dist-packages/cv2.so cv2.so</div></pre></td></tr></table></figure></p>
+<p>验证：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$python</div><div class="line">&gt;&gt;import cv2</div><div class="line">&gt;&gt;print cv2.__version__</div></pre></td></tr></table></figure></p>
+<h1 id="Faster-R-CNN运行demo-py"><a href="#Faster-R-CNN运行demo-py" class="headerlink" title="Faster R-CNN运行demo.py"></a>Faster R-CNN运行demo.py</h1><p>在这里有两个项目都可以运行：<br><a href="https://github.com/CharlesShang/TFFRCNN" target="_blank" rel="external">TFFRCNN</a>和<a href="https://github.com/smallcorgi/Faster-RCNN_TF" target="_blank" rel="external">Faster-RCNN_TF</a>，我选的是前者，后者操作没有差别。<br>解压后，修改make.sh为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env bash</div><div class="line">TF_INC=$(python -c &apos;import tensorflow as tf; print(tf.sysconfig.get_include())&apos;)</div><div class="line">echo $TF_INC</div><div class="line"></div><div class="line">TF_LIB=$(python -c &apos;import tensorflow as tf; print(tf.sysconfig.get_lib())&apos;)</div><div class="line"># echo $TF_LIB</div><div class="line"></div><div class="line">CUDA_PATH=/usr/local/cuda/</div><div class="line"></div><div class="line">cd roi_pooling_layer</div><div class="line"></div><div class="line">nvcc -std=c++11 -c -o roi_pooling_op.cu.o roi_pooling_op_gpu.cu.cc \</div><div class="line">	-I $TF_INC -D GOOGLE_CUDA=1 -x cu -Xcompiler -fPIC -arch=sm_52</div><div class="line"></div><div class="line">## if you install tf using already-built binary, or gcc version 4.x, uncomment the two lines below</div><div class="line">#g++ -std=c++11 -shared -D_GLIBCXX_USE_CXX11_ABI=0 -o roi_pooling.so roi_pooling_op.cc \</div><div class="line">#	roi_pooling_op.cu.o -I $TF_INC -fPIC -lcudart -L $CUDA_PATH/lib64</div><div class="line"></div><div class="line"># for gcc5-built tf</div><div class="line">#g++ -std=c++11 -shared -D_GLIBCXX_USE_CXX11_ABI=1 -o roi_pooling.so roi_pooling_op.cc \</div><div class="line">#	roi_pooling_op.cu.o -I $TF_INC -fPIC -lcudart -L $CUDA_PATH/lib64</div><div class="line">	g++ -std=c++11 -shared -o roi_pooling.so roi_pooling_op.cc -D_GLIBCXX_USE_CXX11_ABI=0 \</div><div class="line">		roi_pooling_op.cu.o -I $TF_INC -L $TF_LIB -ltensorflow_framework -D GOOGLE_CUDA=1 \</div><div class="line">		-fPIC $CXXFLAGS -lcudart -L $CUDA_PATH/lib64</div><div class="line">cd ..</div><div class="line"></div><div class="line"></div><div class="line"># add building psroi_pooling layer</div><div class="line">cd psroi_pooling_layer</div><div class="line">nvcc -std=c++11 -c -o psroi_pooling_op.cu.o psroi_pooling_op_gpu.cu.cc \</div><div class="line">	-I $TF_INC -D GOOGLE_CUDA=1 -x cu -Xcompiler -fPIC -arch=sm_52</div><div class="line"></div><div class="line">#g++ -std=c++11 -shared -o psroi_pooling.so psroi_pooling_op.cc \</div><div class="line">#	psroi_pooling_op.cu.o -I $TF_INC -fPIC -lcudart -L $CUDA_PATH/lib64</div><div class="line">	g++ -std=c++11 -shared -o psroi_pooling.so psroi_pooling_op.cc -D_GLIBCXX_USE_CXX11_ABI=0 \</div><div class="line">		psroi_pooling_op.cu.o -I $TF_INC -L $TF_LIB -ltensorflow_framework -D GOOGLE_CUDA=1 \</div><div class="line">		-fPIC $CXXFLAGS -lcudart -L $CUDA_PATH/lib64</div><div class="line"></div><div class="line">## if you install tf using already-built binary, or gcc version 4.x, uncomment the two lines below</div><div class="line">#	g++ -std=c++11 -shared -D_GLIBCXX_USE_CXX11_ABI=0 -o psroi_pooling.so psroi_pooling_op.cc \</div><div class="line">#		psroi_pooling_op.cu.o -I $TF_INC -fPIC -lcudart -L $CUDA_PATH/lib64</div><div class="line"></div><div class="line">cd ..</div></pre></td></tr></table></figure></p>
+<p>执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/CharlesShang/TFFRCNN.git</div><div class="line">cd TFFRCNN/lib</div><div class="line">make</div></pre></td></tr></table></figure></p>
+<p><em>[注]</em></p>
+<ol>
+<li>编译过程中 出现nsync_cv.h: No such file or directory，找到相应文件目录下mutex.h文件，把文件全路径填上去即可，我的是<code>/home/xxx/tensorflow/lib/python2.7/site-packages/external/nsync/public/nsync_cv.h</code>，这个问题参考<a href="https://www.cnblogs.com/danpe/p/7825357.html" target="_blank" rel="external">链接</a></li>
+<li>期间还会出现导入模块错误，没有模块就直接pip install 相应模块即可<br>运行Demo<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd $TFFRCNN</div><div class="line">python ./faster_rcnn/demo.py --model model_path</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>下载<a href="https://drive.google.com/file/d/0ByuDEGFYmWsbNVF5eExySUtMZmM/view" target="_blank" rel="external">VGG_imagenet.npy</a><br>demo.py的简单流程：<br><img src="/imgs/FasterRCNNdemo.jpg" alt="FasterRCNNdemo"><br>结果如下：<br><img src="/imgs/TFRRCNN_demo_1.png" alt="TFRRCNN_demo_1.png"><br><img src="/imgs/TFRRCNN_demo_2.png" alt="TFRRCNN_demo_2.png"><br><img src="/imgs/TFRRCNN_demo_3.png" alt="TFRRCNN_demo_3.png"><br><img src="/imgs/TFRRCNN_demo_4.png" alt="TFRRCNN_demo_4.png"><br><img src="/imgs/TFRRCNN_demo_5.png" alt="TFRRCNN_demo_5.png"><br><img src="/imgs/TFRRCNN_demo_6.png" alt="TFRRCNN_demo_6.png"><br><img src="/imgs/TFRRCNN_demo_7.png" alt="TFRRCNN_demo_7.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>您的支持将鼓励我努力创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="Dreamsong 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.jpg" alt="Dreamsong 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Dreamsong
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://songit.cn/RunFaster-R-cnn-TF-OnUbuntu/" title="Ubuntu16.04+CUDA9.0+CUDNN7.0+Faster RCNN+Tensorflow1.5">http://songit.cn/RunFaster-R-cnn-TF-OnUbuntu/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/CUDA/" rel="tag"># CUDA</a>
+          
+            <a href="/tags/Tensorflow/" rel="tag"># Tensorflow</a>
+          
+            <a href="/tags/神经网络/" rel="tag"># 神经网络</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Opencv/" rel="tag"># Opencv</a>
+          
+            <a href="/tags/RCNN/" rel="tag"># RCNN</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Object-Detection/" rel="next" title="Object-Detection">
+                <i class="fa fa-chevron-left"></i> Object-Detection
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/qiniuyunover/" rel="prev" title="从七牛云过期域名中下载文件并部署到github">
+                从七牛云过期域名中下载文件并部署到github <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="SOHUCS"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Dreamsong" />
+            
+              <p class="site-author-name" itemprop="name">Dreamsong</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/dreamay" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@songit.cn" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://weibo.com/u/2204471217" target="_blank" title="Weibo">
+                    
+                      <i class="fa fa-fw fa-weibo"></i>Weibo</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://www.jianshu.com/u/152629b84b6a" target="_blank" title="Jianshu">
+                    
+                      <i class="fa fa-fw fa-book"></i>Jianshu</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.mxsong.com/" title="My Homepage" target="_blank">My Homepage</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://iamlay.com/" title="AimLay的技术博客" target="_blank">AimLay的技术博客</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://sovtan.com/" title="坦坦的小屋" target="_blank">坦坦的小屋</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.guru99.com/selenium-tutorial.html" title="Selenium" target="_blank">Selenium</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Win10-Ubuntu16-04双系统安装"><span class="nav-number">1.</span> <span class="nav-text">Win10+Ubuntu16.04双系统安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装CUDA-CUDNN"><span class="nav-number">2.</span> <span class="nav-text">安装CUDA+CUDNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装显卡驱动"><span class="nav-number">2.1.</span> <span class="nav-text">安装显卡驱动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装CUDA"><span class="nav-number">2.2.</span> <span class="nav-text">安装CUDA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装CUDNN"><span class="nav-number">2.3.</span> <span class="nav-text">安装CUDNN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Anaconda3"><span class="nav-number">3.</span> <span class="nav-text">安装Anaconda3</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Tensorflow"><span class="nav-number">4.</span> <span class="nav-text">安装Tensorflow</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建新环境（python-2-7）"><span class="nav-number">4.1.</span> <span class="nav-text">创建新环境（python=2.7）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#激活tensorflow环境"><span class="nav-number">4.2.</span> <span class="nav-text">激活tensorflow环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装tensorflow"><span class="nav-number">4.3.</span> <span class="nav-text">安装tensorflow</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Opencv"><span class="nav-number">5.</span> <span class="nav-text">安装Opencv</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装系统依赖包"><span class="nav-number">5.1.</span> <span class="nav-text">安装系统依赖包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下载Opencv3-4-1和OpenCV-contrib"><span class="nav-number">5.2.</span> <span class="nav-text">下载Opencv3.4.1和OpenCV_contrib</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Faster-R-CNN运行demo-py"><span class="nav-number">6.</span> <span class="nav-text">Faster R-CNN运行demo.py</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Dreamsong</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <a href="http://www.beian.miit.gov.cn/state/outPortal/loginPortal.action">豫ICP备17030278号</a>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 本站总访客
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cytamnzhz';
+      var conf = 'c51e63345c8bbfaa2bf7d0267f93f04c';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
